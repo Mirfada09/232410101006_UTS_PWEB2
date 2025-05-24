@@ -9,24 +9,26 @@ class PageController extends Controller
 {
     public function login()
     {
-        return view('login'); // resources/views/login.blade.php
+        return view('login');
     }
 
     public function doLogin(Request $request)
-        {
+    {
         $username = $request->input('username');
         $password = $request->input('password');
-
         if ($username === 'mirfada' && $password === 'mirfada16') {
             return redirect()->route('dashboard', ['username' => $username]);
         }
-
         return back()->withErrors(['login' => 'Username atau password salah']);
     }
 
     public function dashboard(Request $request)
     {
         $username = $request->query('username');
+        if (!$username) {
+            return redirect()->route('login')->withErrors(['login' => 'Silakan login dulu.']);
+        }
+
         $products = [
             [
                 'nama' => 'Bloomatte Perfect Cover Cushion',
@@ -103,42 +105,23 @@ class PageController extends Controller
         ];
         return view('dashboard', compact('username', 'products'));
     }
-
     public function product(Request $request)
     {
         $username = $request->query('username');
-        $products = [
-            [
-                'nama' => 'Cushion',
-                'stok' => 10,
-                'kategori' => 'Face',
-                'harga' => 'Rp. 45.454',
-                'deskripsi' => 'BB Cushion pertama dengan skin care benefit yang memberikan hasil healthy looking skin.',
-                'gambar' => 'images/cushion.png'
-            ],
-            [
-                'nama' => 'Cushion',
-                'stok' => 10,
-                'kategori' => 'Face',
-                'harga' => 'Rp. 45.454',
-                'deskripsi' => 'BB Cushion pertama dengan skin care benefit yang memberikan hasil healthy looking skin.',
-                'gambar' => 'images/cushion.png'
-            ],
-            [
-                'nama' => 'Cushion',
-                'stok' => 10,
-                'kategori' => 'Face',
-                'harga' => 'Rp. 45.454',
-                'deskripsi' => 'BB Cushion pertama dengan skin care benefit yang memberikan hasil healthy looking skin.',
-                'gambar' => 'images/cushion.png'
-            ],
-        ];
-        return view('product', compact('products', 'username'));
+        if (!$username) {
+            return redirect()->route('login')->withErrors(['login' => 'Silakan login dulu.']);
+        }
+
+        return view('product', compact('username'));
     }
 
     public function profile(Request $request)
     {
         $username = $request->query('username');
+        if (!$username) {
+            return redirect()->route('login')->withErrors(['login' => 'Silakan login dulu.']);
+        }
+
         $profileData = [
             'foto' => 'https://images.soco.id/a10780f4-99ca-4e59-b582-94aad0f5b15a-image-2-1723432952703',
             'nama' => 'Mirfada Arubba Yoana',
@@ -149,14 +132,16 @@ class PageController extends Controller
 
     public function logout($username)
     {
-        // karena gak pakai session, logout cukup redirect ke login
         return redirect()->route('login');
     }
 
     public function productAdd(Request $request)
     {
-        // return view('product', compact('username'));
         $username = $request->query('username');
+        if (!$username) {
+            return redirect()->route('login')->withErrors(['login' => 'Silakan login dulu.']);
+        }
+
         $newItem = [
             'gambar' => $request->input('gambar'),
             'nama' => $request->input('nama'),
@@ -168,7 +153,6 @@ class PageController extends Controller
 
         $products = [];
         $products[] = $newItem;
-
         return view('product', compact('username', 'products'));
     }
 

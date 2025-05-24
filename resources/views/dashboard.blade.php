@@ -5,10 +5,8 @@
 @section('content')
 <div class="min-h-screen bg-pink-200 py-8 px-4">
     <div class="bg-pink-100 rounded-xl shadow-md p-6">
-        <div class="flex items-center justify-between mb-6">
-            <h1 class="text-2xl font-semibold text-gray-700">Welcome, Mirfadaay {{ $username }}!</h1>
-            <a href="{{ route('logout', ['username' => $username]) }}"
-                class="bg-rose-400 text-white px-4 py-2 rounded-full hover:bg-rose-500 transition">Logout</a>
+        <div class="flex justify-between mb-6">
+            <h1 class="text-2xl font-semibold text-gray-700">Welcome, {{ $username }}!</h1>
         </div>
 
         {{-- Produk Section --}}

@@ -8,12 +8,14 @@
         <p><strong>Stok:</strong> {{ $product['stok'] }}</p>
         <p class="text-gray-600 text-sm mt-2">{{ $product['deskripsi'] }}</p>
 
-        <button onclick="closeModal({{ $index }})"
-            class="mt-6 bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded">
-            Tutup
-        </button >
-        </button>
-</a>
-</a>
+        <div class="flex justify-between">
+            <button onclick="closeModal({{ $index }})"
+                class="mt-6 bg-gray-300 hover:bg-gray-400 text-gray-800 px-4 py-2 rounded">
+                Tutup
+            </button>
+            <button class="mt-6 bg-rose-600 hover:bg-gray-400 text-white px-4 py-2 rounded">
+                Edit
+            </button>
+        </div>
     </div>
 </div>
